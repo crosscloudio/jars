@@ -1,0 +1,82 @@
+upload:
+  - expected: sites/monkey/_api/web/GetFolderByServerRelativeUrl('/sites/monkey/Shared Documents/asdf')/Files/add(url='my_file',overwrite=true)
+    kwargs:
+      parent_path: ['asdf']
+      file_name: 'my_file'
+
+
+download:
+  - expected: sites/monkey/Shared Documents/some_file.txt
+    kwargs:
+      path: [some_file.txt]
+
+
+files:
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/')/files
+    kwargs:
+      path: []
+
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/one/two.txt')/files
+    kwargs:
+      path: [one, two.txt]
+
+folders:
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/')/folders
+    kwargs:
+      path: []
+
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/one/two')/folders
+    kwargs:
+      path: [one, two]
+
+server_relative:
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/')
+    kwargs:
+      path: []
+
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/one/two')
+    kwargs:
+      path: [one, two]
+
+
+server_relative_folder:
+  - expected: sites/monkey/_api/web/GetFolderByServerRelativeUrl('/sites/monkey/Shared Documents/')
+    kwargs:
+      path: []
+
+contextinfo:
+  - expected: sites/monkey/_api/contextinfo
+
+move_folder:
+  - expected: sites/monkey/_api/web/GetFolderByServerRelativeUrl('/sites/monkey/Shared Documents/take/me')/moveto(newUrl='/sites/monkey/Shared Documents/put/it/here')
+    kwargs:
+      source: ['take', 'me']
+      target: ['put', 'it', 'here']
+
+move_file:
+  - expected: sites/monkey/_api/web/GetFileByServerRelativeUrl('/sites/monkey/Shared Documents/take/me.txt')/moveto(newurl='/sites/monkey/Shared Documents/put/it/here.txt',flags=1)
+    kwargs:
+      source: ['take', 'me.txt']
+      target: ['put', 'it', 'here.txt']
+
+list_folder_file:
+  - expected: sites/monkey/_api/Web/Lists(guid'12')/items?$expand=Folder,File
+    kwargs:
+      guid: 12
+
+
+list_item_meta:
+  - expected: sites/monkey/_api/web/Lists(guid'list_id')/Items('item_id')/?$expand=File,Folder
+    kwargs:
+      item_id: 'item_id'
+      list_id: 'list_id'
+
+parent_meta:
+  - expected: sites/monkey/_api/web/GetFolderById('item_id')?$select=ParentFolder&$expand=ParentFolder
+    kwargs:
+      item_id: item_id
+
+list_id_from_title:
+  - expected: sites/monkey/_api/web/Lists/GetByTitle('Documents')/?$select=ID
+    kwargs:
+      title: 'Documents'

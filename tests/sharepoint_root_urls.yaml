@@ -1,0 +1,83 @@
+upload:
+  - expected: /_api/web/GetFolderByServerRelativeUrl('/Shared Documents/asdf')/Files/add(url='my_file',overwrite=true)
+    kwargs:
+      parent_path: ['asdf']
+      file_name: 'my_file'
+
+
+download:
+  - expected: /Shared Documents/some_file.txt
+    kwargs:
+      path: [some_file.txt]
+
+
+files:
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/')/files
+    kwargs:
+      path: []
+
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/one/two.txt')/files
+    kwargs:
+      path: [one, two.txt]
+
+folders:
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/')/folders
+    kwargs:
+      path: []
+
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/one/two')/folders
+    kwargs:
+      path: [one, two]
+
+server_relative:
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/')
+    kwargs:
+      path: []
+
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/one/two')
+    kwargs:
+      path: [one, two]
+
+
+server_relative_folder:
+  - expected: /_api/web/GetFolderByServerRelativeUrl('/Shared Documents/')
+    kwargs:
+      path: []
+
+contextinfo:
+  - expected: /_api/contextinfo
+
+
+move_folder:
+  - expected: /_api/web/GetFolderByServerRelativeUrl('/Shared Documents/take/me')/moveto(newUrl='/Shared Documents/put/it/here')
+    kwargs:
+      source: ['take', 'me']
+      target: ['put', 'it', 'here']
+
+move_file:
+  - expected: /_api/web/GetFileByServerRelativeUrl('/Shared Documents/take/me.txt')/moveto(newurl='/Shared Documents/put/it/here.txt',flags=1)
+    kwargs:
+      source: ['take', 'me.txt']
+      target: ['put', 'it', 'here.txt']
+
+list_folder_file:
+  - expected: /_api/Web/Lists(guid'12')/items?$expand=Folder,File
+    kwargs:
+      guid: 12
+
+
+list_item_meta:
+  - expected: /_api/web/Lists(guid'list_id')/Items('item_id')/?$expand=File,Folder
+    kwargs:
+      item_id: 'item_id'
+      list_id: 'list_id'
+
+parent_meta:
+  - expected: /_api/web/GetFolderById('item_id')?$select=ParentFolder&$expand=ParentFolder
+    kwargs:
+      item_id: item_id
+
+list_id_from_title:
+  - expected: /_api/web/Lists/GetByTitle('Documents')/?$select=ID
+    kwargs:
+      title: 'Documents'

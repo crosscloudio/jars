@@ -1,0 +1,107 @@
+path_meta:
+  - expected: /v1.0/me/drive/root:/a/b/c:/
+    kwargs:
+      path: a/b/c
+
+  - expected: /v1.0/me/drive/root:/x/y/z:/
+    args:
+      - x/y/z
+
+  - expected: /v1.0/groups/0caa6483-9eaa-4fe7-b19f-a657051bd8ae/drive/root:/somefile.txt:/
+    kwargs:
+      group_id: 0caa6483-9eaa-4fe7-b19f-a657051bd8ae
+      path: somefile.txt
+
+upload:
+  - expected: /v1.0/me/drive/items/LKJBBLJSA9H/children/myfile.txt/content
+    kwargs:
+      parent_id: LKJBBLJSA9H
+      filename: myfile.txt
+
+  - expected: /v1.0/me/drive/items/parent_id/children/filename/content
+    kwargs:
+      parent_id: parent_id
+      filename: filename
+
+  - expected: /v1.0/me/drive/root:/parent_path/filename:/content
+    kwargs:
+      parent_path: parent_path
+      filename: filename
+
+  - expected: /v1.0/groups/group_id/drive/items/parent_id/children/filename/content
+    kwargs:
+      parent_id: parent_id
+      filename: filename
+      group_id: group_id
+
+upload_session:
+  - expected: /v1.0/me/drive/root:/a/b/c:/createUploadSession
+    kwargs:
+      path: a/b/c
+  - expected: /v1.0/groups/group_id/drive/root:/x/y/z:/createUploadSession
+    kwargs:
+      path: x/y/z
+      group_id: group_id
+
+download:
+  - expected: /v1.0/me/drive/root:/a/b/c:/content
+    kwargs:
+      path: a/b/c
+
+  - expected: /v1.0/groups/mYGr0up/drive/root:/fancy_path/file.txt:/content
+    kwargs:
+      group_id: mYGr0up
+      path: fancy_path/file.txt
+
+
+new_dir:
+  - expected: /v1.0/me/drive/root/children
+  - expected: /v1.0/me/drive/items/LookAtMe/children
+    kwargs:
+      parent_dir_meta:
+        id: LookAtMe
+  - expected: /v1.0/groups/mYGr0up/drive/items/LookAtMe/children
+    kwargs:
+      group_id: mYGr0up
+      parent_dir_meta:
+        id: LookAtMe
+
+delta:
+  - expected: /v1.0/me/drive/root/delta
+  - expected: /v1.0/groups/0caa6483-9eaa-4fe7-b19f-a657051bd8ae/drive/root/delta
+    kwargs:
+      group_id: 0caa6483-9eaa-4fe7-b19f-a657051bd8ae
+
+patch:
+  - expected: /v1.0/me/drive/items/99/
+    kwargs:
+      item_meta:
+        id: 99
+  - expected: /v1.0/groups/somelonghash/drive/items/22/
+    kwargs:
+      group_id: somelonghash
+      item_meta:
+        id: 22
+
+
+children:
+  - expected: /v1.0/me/drive/root/children
+
+
+delete:
+  - expected: /v1.0/me/drive/root:/a/b/c
+    kwargs:
+      path: a/b/c
+
+root_info:
+  - expected: /v1.0/me/drive/root
+
+  - expected: /v1.0/groups/01X6R6YBV6Y2GOVW7725BZO354PWSELRRZ/drive/root
+    kwargs:
+      group_id: 01X6R6YBV6Y2GOVW7725BZO354PWSELRRZ
+
+drive_info:
+  - expected: /v1.0/me/drive
+  - expected: /v1.0/groups/group_id/drive
+    kwargs:
+      group_id: group_id

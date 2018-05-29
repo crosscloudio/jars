@@ -1,0 +1,22 @@
+
+version: '3.1'
+services:
+  nextcloud:
+    image: ${CLOUD_IMAGE}
+    links:
+       - nextcloud-db:nextcloud-db   # If using MySQL
+    command:
+      /setup/setup.sh
+    volumes:
+      - ./setup:/setup
+    ports:
+        - 80:80
+
+  # If using MySQL
+  nextcloud-db:
+    image: mariadb:10
+    environment:
+      - MYSQL_ROOT_PASSWORD=supersecretpassword
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=supersecretpassword
